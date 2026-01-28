@@ -2,7 +2,6 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import HeroProduct from './HeroProduct'
 
 export default function Hero() {
   return (
@@ -14,9 +13,6 @@ export default function Hero() {
         <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-prysm-thinq-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
       </div>
       
-      {/* Floating Product (Desktop only) */}
-      <HeroProduct />
-
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <motion.div

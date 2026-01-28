@@ -74,6 +74,21 @@ export const PRODUCTS = {
       cutout: '/images/products/nightnite-cutout.png',
     },
   },
+  BUNDLE: {
+    name: 'The Prysm System',
+    slug: 'prysm-system-bundle',
+    price: 175.00, // Significant discount vs $207 total
+    color: 'prysm-best', // Uses Gold accent
+    description: 'The complete daily protocol. Energy, Focus, Wellness, and Sleep in one synchronized system.',
+    category: 'bundle',
+    images: {
+      // We will ignore these specific paths and use the composition in the page
+      dark: '/images/products/bundle-dark.png', 
+      light: '/images/products/bundle-light.png',
+      package: '/images/products/bundle-package.png',
+      cutout: '/images/products/bundle-cutout.png',
+    },
+  },
 } as const
 
 // Helper function to get product image based on context

@@ -69,6 +69,12 @@ export default function Header() {
                         >
                           NightNite
                         </Link>
+                        <Link 
+                          href="/shop/bundle" 
+                          className="block px-4 py-2 text-sm text-accent-gold hover:bg-accent-gold/10 transition-colors font-medium border-t border-white/5 mt-1"
+                        >
+                          The System Bundle
+                        </Link>
                       </div>
                     </motion.div>
                   )}
@@ -170,6 +176,13 @@ export default function Header() {
                       onClick={() => setIsMenuOpen(false)}
                     >
                       NightNite
+                    </Link>
+                    <Link
+                      href="/shop/bundle"
+                      className="block pl-4 text-accent-gold font-medium"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      The System Bundle
                     </Link>
                   </div>
                   
