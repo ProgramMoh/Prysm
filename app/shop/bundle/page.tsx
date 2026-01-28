@@ -4,7 +4,6 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { PRODUCTS } from '@/lib/constants'
 import PurchaseControls from '@/components/shop/PurchaseControls'
-import { cn } from '@/lib/utils'
 
 // Calculate total value dynamically
 const INDIVIDUAL_TOTAL = 

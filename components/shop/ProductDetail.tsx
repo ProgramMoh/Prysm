@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
-import { PRODUCTS } from '@/lib/constants'
 import ProductImageVariantSelector from './ProductImageVariantSelector'
 
 interface ProductDetailProps {

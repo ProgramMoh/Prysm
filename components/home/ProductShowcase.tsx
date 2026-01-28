@@ -15,89 +15,84 @@ const products = [
 
 export default function ProductShowcase() {
   return (
-    <section className="py-24 bg-gradient-to-b from-bg-primary via-bg-primary to-prysm-thinq-900/5">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-32 bg-bg-secondary relative overflow-hidden">
+      
+      {/* Subtle Background Pattern */}
+      <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:16px_16px]" />
+
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
+          viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6"
         >
-          <h2 className="text-4xl md:text-6xl font-heading font-bold mb-4 bg-gradient-to-r from-text-primary to-text-secondary bg-clip-text text-transparent">
-            Our Products
-          </h2>
-          <p className="text-text-secondary text-lg max-w-2xl mx-auto">
-            Premium formulations designed for your lifestyle
-          </p>
+          <div>
+            <h2 className="text-4xl md:text-5xl font-heading font-bold text-bg-primary mb-2">
+              The Collection
+            </h2>
+            <p className="text-text-secondary text-lg max-w-md">
+              Engineered for every state of mind.
+            </p>
+          </div>
+          <Link
+            href="/shop"
+            className="hidden md:inline-flex items-center text-bg-primary font-medium hover:text-accent-gold transition-colors"
+          >
+            View All Products <span className="ml-2">→</span>
+          </Link>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {products.map((product, index) => (
             <motion.div
               key={product.slug}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              whileHover={{ y: -8 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              whileHover={{ y: -5 }}
             >
-              <Link href={`/shop/${product.slug}`}>
-                <div
-                  className={cn(
-                    'group relative h-full p-6 lg:p-8 border border-text-secondary/10 hover:border-text-secondary/30 transition-all duration-300 rounded-lg overflow-hidden',
-                    'bg-gradient-to-br from-bg-primary',
-                    product.color === 'prysm-intima' && 'to-prysm-intima-900/20 hover:to-prysm-intima-900/30',
-                    product.color === 'prysm-thinq' && 'to-prysm-thinq-900/20 hover:to-prysm-thinq-900/30',
-                    product.color === 'prysm-best' && 'to-prysm-best-900/20 hover:to-prysm-best-900/30',
-                    product.color === 'nightnite' && 'to-nightnite-900/20 hover:to-nightnite-900/30'
-                  )}
-                >
-                  {/* Product color accent gradient */}
-                  <div
-                    className={cn(
-                      'absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r to-transparent',
-                      product.color === 'prysm-intima' && 'from-prysm-intima-500',
-                      product.color === 'prysm-thinq' && 'from-prysm-thinq-500',
-                      product.color === 'prysm-best' && 'from-prysm-best-500',
-                      product.color === 'nightnite' && 'from-nightnite-500'
-                    )}
-                  />
+              <Link href={`/shop/${product.slug}`} className="block h-full">
+                <div className="group relative h-full bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100">
                   
-                  {/* Product Image - Using cutout on dark background */}
-                  <div className="relative w-full h-48 mb-6 rounded-lg overflow-hidden">
-                    <ProductImage
-                      src={product.images.cutout}
-                      alt={product.name}
-                      variant="cutout"
-                      className="h-full"
-                      enable3D={true}
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-                    />
+                  {/* Image Area */}
+                  <div className="relative h-64 w-full bg-gray-50/50 flex items-center justify-center p-6 group-hover:bg-gray-50 transition-colors">
+                    <div className="relative w-full h-full transition-transform duration-500 group-hover:scale-105">
+                      <ProductImage
+                        src={product.images.cutout}
+                        alt={product.name}
+                        variant="cutout"
+                        className="h-full object-contain"
+                        enable3D={true}
+                      />
+                    </div>
                   </div>
                   
-                  <div className="space-y-3">
-                    <h3 className={cn(
-                      'text-xl lg:text-2xl font-heading font-semibold transition-colors',
-                      product.color === 'prysm-intima' && 'text-prysm-intima-500 group-hover:text-prysm-intima-400',
-                      product.color === 'prysm-thinq' && 'text-prysm-thinq-400 group-hover:text-prysm-thinq-300',
-                      product.color === 'prysm-best' && 'text-prysm-best-500 group-hover:text-prysm-best-400',
-                      product.color === 'nightnite' && 'text-nightnite-400 group-hover:text-nightnite-300'
-                    )}>
-                      {product.name}
-                    </h3>
-                    <p className="text-text-secondary text-sm leading-relaxed">
+                  {/* Content Area */}
+                  <div className="p-6">
+                    <div className="flex justify-between items-start mb-2">
+                      <h3 className="text-lg font-heading font-bold text-bg-primary">
+                        {product.name.replace('Prysm ', '')}
+                      </h3>
+                      <span className={cn(
+                        "text-xs font-bold px-2 py-1 rounded-full uppercase tracking-wider",
+                        product.category === 'sleep' 
+                          ? "bg-nightnite-50 text-nightnite-900" 
+                          : "bg-orange-50 text-orange-900"
+                      )}>
+                        {product.category}
+                      </span>
+                    </div>
+                    
+                    <p className="text-gray-500 text-sm leading-relaxed line-clamp-2 mb-4">
                       {product.description}
                     </p>
-                    <span className={cn(
-                      'inline-block text-sm font-heading font-medium transition-colors',
-                      product.color === 'prysm-intima' && 'text-prysm-intima-500 group-hover:text-prysm-intima-400',
-                      product.color === 'prysm-thinq' && 'text-prysm-thinq-400 group-hover:text-prysm-thinq-300',
-                      product.color === 'prysm-best' && 'text-prysm-best-500 group-hover:text-prysm-best-400',
-                      product.color === 'nightnite' && 'text-nightnite-400 group-hover:text-nightnite-300'
-                    )}>
-                      Learn More →
-                    </span>
+                    
+                    <div className="flex items-center text-sm font-medium text-bg-primary group-hover:text-accent-gold transition-colors">
+                      Shop Now
+                    </div>
                   </div>
                 </div>
               </Link>
@@ -105,20 +100,14 @@ export default function ProductShowcase() {
           ))}
         </div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-center mt-12"
-        >
-          <Link
+        <div className="mt-12 text-center md:hidden">
+           <Link
             href="/shop"
-            className="inline-block px-8 py-4 border-2 border-prysm-best-500 text-prysm-best-500 font-heading font-semibold hover:bg-prysm-best-500/10 transition-all duration-200 rounded-lg"
+            className="inline-block px-8 py-3 border border-gray-300 rounded-full text-bg-primary font-medium"
           >
-            Shop All Products
+            View All Products
           </Link>
-        </motion.div>
+        </div>
       </div>
     </section>
   )
