@@ -61,7 +61,7 @@ export default function Header() {
                         </Link>
                         <Link 
                           href="/shop/nightnite" 
-                          className="block px-4 py-2 text-sm text-text-primary hover:bg-nightnite-500/10 hover:text-nightnite-500 transition-colors"
+                          className="block px-4 py-2 text-sm text-text-primary hover:bg-nightnite-500/10 hover:text-nightnite-100 transition-colors"
                         >
                           NightNite
                         </Link>
@@ -162,7 +162,7 @@ export default function Header() {
                     </Link>
                     <Link
                       href="/shop/nightnite"
-                      className="block pl-4 text-text-primary hover:text-nightnite-500"
+                      className="block pl-4 text-text-primary hover:text-nightnite-50"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       NightNite
