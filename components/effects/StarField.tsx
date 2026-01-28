@@ -14,7 +14,6 @@ export default function StarField() {
 
     let animationFrameId: number
     
-    // Set canvas size
     const handleResize = () => {
       canvas.width = window.innerWidth
       canvas.height = window.innerHeight
@@ -23,11 +22,12 @@ export default function StarField() {
     handleResize()
     window.addEventListener('resize', handleResize)
 
-    // Star properties
     const stars: { x: number; y: number; size: number; opacity: number; speed: number }[] = []
-    const starCount = 150
+    
+    // OPTIMIZATION: Reduce star count significantly on mobile
+    const isMobile = window.innerWidth < 768
+    const starCount = isMobile ? 50 : 150 // Reduced from 150 to 50 on mobile
 
-    // Initialize stars
     for (let i = 0; i < starCount; i++) {
       stars.push({
         x: Math.random() * canvas.width,
@@ -42,7 +42,6 @@ export default function StarField() {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
       
       stars.forEach(star => {
-        // Update opacity for twinkling effect
         star.opacity += star.speed
         if (star.opacity > 1 || star.opacity < 0.2) {
           star.speed = -star.speed
