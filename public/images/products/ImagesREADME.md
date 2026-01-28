@@ -2,8 +2,6 @@
 
 ## Required Images
 
-Place the following images in this directory:
-
 ### Prysm Intima
 - `prysm-intima-dark.png` - Product on dark background
 - `prysm-intima-light.png` - Product on light background
@@ -30,14 +28,13 @@ Place the following images in this directory:
 
 ## Image Specifications
 
-### Recommended Sizes:
-- **Cutout images**: 800x1200px (portrait orientation)
-- **Package images**: 1200x1200px (square)
-- **Dark/Light background**: 1200x1200px (square)
+### Sizes:
+- **Cutout images**: 512x1356px (only nightnite cutout is smaller at 512x1024px)
+- **Package images**: 1024x1536px (all of them)
+- **Dark/Light background**: 512x1534px (only nightnite cutout is smaller at 360x1200px)
 
 ### Format:
 - PNG format (for transparency on cutout images)
-- Optimized for web (compressed but high quality)
 - RGB color space
 
 ## Usage
