@@ -6,15 +6,19 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { SignInButton, useUser } from '@clerk/nextjs'
 import CartDrawer from '@/components/cart/CartDrawer'
 import AccountMenu from './AccountMenu'
+import { useCartStore } from '@/lib/store'
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [isCartOpen, setIsCartOpen] = useState(false)
   const [isAccountDropdownOpen, setIsAccountDropdownOpen] = useState(false)
   // New state for Shop dropdown
   const [isShopDropdownOpen, setIsShopDropdownOpen] = useState(false)
   
   const { isSignedIn } = useUser()
+  // ADD THIS: connect to global store
+  const isCartOpen = useCartStore((state) => state.isCartOpen)
+  const openCart = useCartStore((state) => state.openCart)
+  const closeCart = useCartStore((state) => state.closeCart)
 
   return (
     <>
@@ -80,7 +84,7 @@ export default function Header() {
 
               {/* Cart Button */}
               <button
-                onClick={() => setIsCartOpen(true)}
+                onClick={openCart}
                 className="text-text-primary hover:text-prysm-best-500 transition-colors duration-200 font-medium"
                 aria-label="Open cart"
               >
@@ -177,7 +181,7 @@ export default function Header() {
                     About
                   </Link>
                   <button
-                    onClick={() => { setIsCartOpen(true); setIsMenuOpen(false); }}
+                    onClick={() => { openCart(); setIsMenuOpen(false); }}
                     className="block text-text-primary hover:text-accent-gold"
                   >
                     Cart
@@ -200,7 +204,7 @@ export default function Header() {
         </nav>
       </header>
 
-      <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+      <CartDrawer isOpen={isCartOpen} onClose={closeCart} />
     </>
   )
 }

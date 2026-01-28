@@ -38,7 +38,7 @@ export default function ScienceSection() {
             </span>
             <h2 className="text-4xl md:text-6xl font-heading font-bold mb-6">
               Formulated with{' '}
-              <span className="bg-gradient-to-r from-prysm-thinq-400 to-prysm-best-500 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-prysm-best-500 to-prysm-intima-500 bg-clip-text text-transparent">
                 Precision
               </span>
             </h2>

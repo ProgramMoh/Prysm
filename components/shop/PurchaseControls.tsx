@@ -3,27 +3,45 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
-import { Product } from '@/lib/constants'
+import { PRODUCTS } from '@/lib/constants'
+import { useCartStore } from '@/lib/store' // Import the store
+
+// Derive the Product type from the data itself
+type Product = typeof PRODUCTS[keyof typeof PRODUCTS]
 
 interface PurchaseControlsProps {
   product: Product
-  theme?: 'light' | 'dark' // To handle text colors on different backgrounds
+  theme?: 'light' | 'dark'
 }
 
 export default function PurchaseControls({ product, theme = 'light' }: PurchaseControlsProps) {
   const [quantity, setQuantity] = useState(1)
   const [orderType, setOrderType] = useState<'one-time' | 'subscription'>('subscription')
   const [frequency, setFrequency] = useState<'30' | '60' | '90'>('30')
+  
+  // Access the add function from our store
+  const addItem = useCartStore((state) => state.addItem)
 
-  // Reset quantity when product changes (for the Prysm page toggle)
+  // Reset quantity when product changes
   useEffect(() => {
     setQuantity(1)
   }, [product.slug])
 
-  // Text color logic based on theme
   const textColor = theme === 'dark' ? 'text-white' : 'text-text-primary'
   const subTextColor = theme === 'dark' ? 'text-gray-400' : 'text-text-secondary'
   const borderColor = theme === 'dark' ? 'border-white/20' : 'border-text-secondary/30'
+
+  const handleAddToCart = () => {
+    addItem({
+      slug: product.slug,
+      name: product.name,
+      price: product.price,
+      image: product.images.cutout,
+      quantity: quantity,
+      orderType: orderType,
+      frequency: orderType === 'subscription' ? frequency : undefined
+    })
+  }
 
   return (
     <div className="w-full max-w-md space-y-6">
@@ -54,7 +72,7 @@ export default function PurchaseControls({ product, theme = 'light' }: PurchaseC
         </button>
       </div>
 
-      {/* Subscription Frequency (Conditional) */}
+      {/* Subscription Frequency */}
       <AnimatePresence>
         {orderType === 'subscription' && (
           <motion.div
@@ -84,8 +102,6 @@ export default function PurchaseControls({ product, theme = 'light' }: PurchaseC
 
       {/* Quantity & Price Row */}
       <div className="flex items-center justify-between">
-        
-        {/* Quantity Counter */}
         <div className="flex items-center gap-3">
           <button
             onClick={() => setQuantity(Math.max(1, quantity - 1))}
@@ -102,7 +118,6 @@ export default function PurchaseControls({ product, theme = 'light' }: PurchaseC
           </button>
         </div>
 
-        {/* Price Display */}
         <div className="text-right">
           <div className={cn("text-2xl font-heading font-semibold", textColor)}>
             ${(product.price * quantity).toFixed(2)}
@@ -116,13 +131,16 @@ export default function PurchaseControls({ product, theme = 'light' }: PurchaseC
       </div>
 
       {/* Add to Cart Button */}
-      <button className={cn(
-        'w-full py-4 font-heading font-semibold text-lg tracking-wide rounded-lg shadow-lg transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98]',
-        product.color === 'prysm-intima' && 'bg-gradient-to-r from-prysm-intima-100 to-prysm-intima-900 text-bg-primary hover:shadow-prysm-intima-500/25',
-        product.color === 'prysm-thinq' && 'bg-gradient-to-r from-prysm-thinq-500 to-prysm-thinq-600 text-white hover:shadow-prysm-thinq-500/25',
-        product.color === 'prysm-best' && 'bg-gradient-to-r from-prysm-best-500 to-prysm-best-600 text-bg-primary hover:shadow-prysm-best-500/25',
-        product.color === 'nightnite' && 'bg-gradient-to-r from-nightnite-500 to-nightnite-900 text-white hover:shadow-nightnite-500/25'
-      )}>
+      <button 
+        onClick={handleAddToCart}
+        className={cn(
+          'w-full py-4 font-heading font-semibold text-lg tracking-wide rounded-lg shadow-lg transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98]',
+          product.color === 'prysm-intima' && 'bg-gradient-to-r from-prysm-intima-100 to-prysm-intima-500 text-bg-primary hover:shadow-prysm-intima-500/25',
+          product.color === 'prysm-thinq' && 'bg-gradient-to-r from-prysm-thinq-500 to-prysm-thinq-600 text-white hover:shadow-prysm-thinq-500/25',
+          product.color === 'prysm-best' && 'bg-gradient-to-r from-prysm-best-500 to-prysm-best-600 text-bg-primary hover:shadow-prysm-best-500/25',
+          product.color === 'nightnite' && 'bg-gradient-to-r from-nightnite-500 to-nightnite-600 text-white hover:shadow-nightnite-500/25'
+        )}
+      >
         Add to Cart
       </button>
     </div>

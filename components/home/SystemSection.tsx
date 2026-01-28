@@ -16,7 +16,7 @@ export default function SystemSection() {
           >
             <h2 className="text-4xl md:text-6xl font-heading font-bold mb-6 text-bg-primary">
               The{' '}
-              <span className="bg-gradient-to-r from-prysm-best-600 to-prysm-thinq-600 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-prysm-best-500 to-prysm-thinq-500 bg-clip-text text-transparent">
                 System
               </span>
             </h2>
@@ -30,7 +30,7 @@ export default function SystemSection() {
             </p>
             <Link
               href="/shop?bundle=true"
-              className="inline-block px-8 py-4 bg-gradient-to-r from-bg-primary to-prysm-thinq-900 text-prysm-best-500 font-heading font-semibold hover:from-prysm-thinq-900 hover:to-bg-primary transition-all duration-200 rounded-lg shadow-lg"
+              className="inline-block px-8 py-4 bg-gradient-to-r from-bg-primary to-prysm-thinq-500 text-prysm-best-500 font-heading font-semibold hover:from-bg-primary hover:to-prysm-thinq-900 transition-all duration-200 rounded-lg shadow-lg"
             >
               Explore Bundles
             </Link>
