@@ -50,19 +50,24 @@ export default function NightNitePage() {
             transition={{ duration: 1, delay: 0.2 }}
             className="order-1 md:order-2 flex justify-center relative"
           >
-            {/* Glow behind bottle */}
-            <div className="absolute inset-0 bg-nightnite-500/30 blur-[100px] rounded-full" />
+            {/* OPTIMIZATION: Replaced heavy 'blur-[100px]' with a fast CSS radial gradient */}
+            <div 
+              className="absolute inset-0 rounded-full" 
+              style={{ background: 'radial-gradient(circle, rgba(76,29,149,0.4) 0%, transparent 70%)' }}
+            />
             
             <motion.div
               animate={{ y: [0, -20, 0] }}
               transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
-              className="relative w-full max-w-md h-[500px]"
+              // OPTIMIZATION: Added will-change-transform to hint GPU optimization
+              className="relative w-full max-w-md h-[500px] will-change-transform"
             >
                <Image
                   src={NIGHTNITE.images.cutout}
                   alt="NightNite Bottle"
                   fill
-                  className="object-contain drop-shadow-2xl"
+                  // OPTIMIZATION: Removed 'drop-shadow-2xl' which causes heavy repaint on mobile
+                  className="object-contain md:drop-shadow-2xl"
                   sizes="(max-width: 768px) 100vw, 50vw"
                   priority
                 />

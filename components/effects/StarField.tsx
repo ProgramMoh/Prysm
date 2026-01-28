@@ -15,19 +15,26 @@ export default function StarField() {
     let animationFrameId: number
     
     const handleResize = () => {
-      canvas.width = window.innerWidth
-      canvas.height = window.innerHeight
+      // FIX: Use offsetWidth/Height to match the parent container's full scrollable size
+      // instead of window.innerWidth/Height which only matches the viewport.
+      if (canvas.parentElement) {
+        canvas.width = canvas.parentElement.offsetWidth
+        canvas.height = canvas.parentElement.offsetHeight
+      }
     }
     
+    // Initial size
     handleResize()
+    
+    // Update on resize
     window.addEventListener('resize', handleResize)
 
     const stars: { x: number; y: number; size: number; opacity: number; speed: number }[] = []
     
-    // OPTIMIZATION: Reduce star count significantly on mobile
     const isMobile = window.innerWidth < 768
-    const starCount = isMobile ? 50 : 150 // Reduced from 150 to 50 on mobile
+    const starCount = isMobile ? 50 : 150
 
+    // Initialize stars randomly across the full height of the page
     for (let i = 0; i < starCount; i++) {
       stars.push({
         x: Math.random() * canvas.width,
@@ -39,6 +46,7 @@ export default function StarField() {
     }
 
     const animate = () => {
+      // Clear the specific drawing area
       ctx.clearRect(0, 0, canvas.width, canvas.height)
       
       stars.forEach(star => {
@@ -67,7 +75,8 @@ export default function StarField() {
   return (
     <canvas 
       ref={canvasRef} 
-      className="fixed inset-0 z-0 pointer-events-none"
+      // FIX: Changed 'fixed' to 'absolute' and 'h-full' to ensure it fills the parent container
+      className="absolute inset-0 w-full h-full z-0 pointer-events-none"
       style={{ background: 'linear-gradient(to bottom, #0A0A0A 0%, #1a1a2e 100%)' }}
     />
   )
