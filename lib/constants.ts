@@ -6,6 +6,7 @@ export const PRODUCTS = {
   PRYSM_INTIMA: {
     name: 'Prysm Intima',
     slug: 'prysm-intima',
+    price: 49.00, // Added price
     color: 'prysm-intima',
     description: 'Energy booster for sports and athletic performance',
     category: 'energy',
@@ -19,6 +20,7 @@ export const PRODUCTS = {
   PRYSM_THINQ: {
     name: 'Prysm ThinQ',
     slug: 'prysm-thinq',
+    price: 54.00, // Added price
     color: 'prysm-thinq',
     description: 'Focus and work enhancement energy drink',
     category: 'energy',
@@ -32,6 +34,7 @@ export const PRODUCTS = {
   PRYSM_BEST: {
     name: 'Prysm Best of You',
     slug: 'prysm-best-of-you',
+    price: 59.00, // Added price
     color: 'prysm-best',
     description: 'General mood and wellness energy booster',
     category: 'energy',
@@ -45,6 +48,7 @@ export const PRODUCTS = {
   NIGHTNITE: {
     name: 'NightNite',
     slug: 'nightnite',
+    price: 45.00, // Added price
     color: 'nightnite',
     description: 'Melatonin-based sleep aid',
     category: 'sleep',
