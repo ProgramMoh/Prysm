@@ -118,10 +118,10 @@ export default function PurchaseControls({ product, theme = 'light' }: PurchaseC
       {/* Add to Cart Button */}
       <button className={cn(
         'w-full py-4 font-heading font-semibold text-lg tracking-wide rounded-lg shadow-lg transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98]',
-        product.color === 'prysm-intima' && 'bg-gradient-to-r from-prysm-intima-500 to-prysm-intima-600 text-bg-primary hover:shadow-prysm-intima-500/25',
+        product.color === 'prysm-intima' && 'bg-gradient-to-r from-prysm-intima-100 to-prysm-intima-900 text-bg-primary hover:shadow-prysm-intima-500/25',
         product.color === 'prysm-thinq' && 'bg-gradient-to-r from-prysm-thinq-500 to-prysm-thinq-600 text-white hover:shadow-prysm-thinq-500/25',
         product.color === 'prysm-best' && 'bg-gradient-to-r from-prysm-best-500 to-prysm-best-600 text-bg-primary hover:shadow-prysm-best-500/25',
-        product.color === 'nightnite' && 'bg-gradient-to-r from-nightnite-500 to-nightnite-600 text-white hover:shadow-nightnite-500/25'
+        product.color === 'nightnite' && 'bg-gradient-to-r from-nightnite-500 to-nightnite-900 text-white hover:shadow-nightnite-500/25'
       )}>
         Add to Cart
       </button>

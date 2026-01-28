@@ -1,6 +1,21 @@
 // Product image variants
 export type ImageVariant = 'dark' | 'light' | 'package' | 'cutout'
 
+export interface Product {
+  name: string
+  slug: string
+  price: number
+  color: string
+  description: string
+  category: string
+  images: {
+    dark: string
+    light: string
+    package: string
+    cutout: string
+  }
+}
+
 // Product information
 export const PRODUCTS = {
   PRYSM_INTIMA: {

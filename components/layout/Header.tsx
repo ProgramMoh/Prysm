@@ -37,12 +37,11 @@ export default function Header() {
                 onMouseEnter={() => setIsShopDropdownOpen(true)}
                 onMouseLeave={() => setIsShopDropdownOpen(false)}
               >
-                <Link
-                  href="/shop"
+                <span
                   className="text-text-primary hover:text-prysm-best-500 transition-colors duration-200 font-medium py-2"
                 >
                   Shop
-                </Link>
+                </span>
 
                 <AnimatePresence>
                   {isShopDropdownOpen && (
@@ -95,12 +94,11 @@ export default function Header() {
                   onMouseEnter={() => setIsAccountDropdownOpen(true)}
                   onMouseLeave={() => setIsAccountDropdownOpen(false)}
                 >
-                  <Link
-                    href="/account"
+                  <span
                     className="text-text-primary hover:text-prysm-best-500 transition-colors duration-200 font-medium py-2"
                   >
                     Account
-                  </Link>
+                  </span>
 
                   <AnimatePresence>
                     {isAccountDropdownOpen && (
@@ -154,7 +152,7 @@ export default function Header() {
                 <div className="py-4 space-y-4">
                   {/* Mobile Shop Submenu */}
                   <div className="space-y-2">
-                    <p className="text-text-secondary text-sm font-medium px-1">Shop</p>
+                    <p className="text-text-secondary text-sm font-medium px-1 uppercase tracking-wider">Shop</p>
                     <Link
                       href="/shop/prysm"
                       className="block pl-4 text-text-primary hover:text-prysm-best-500"
@@ -187,10 +185,8 @@ export default function Header() {
                   
                   {isSignedIn ? (
                     <div className="pt-2 border-t border-text-secondary/10">
-                      <div className="mb-2">
-                        <Link href="/account" onClick={() => setIsMenuOpen(false)} className="block text-text-primary font-medium">My Account</Link>
-                      </div>
-                      <div className="pl-2"><AccountMenu /></div>
+                       <p className="text-text-secondary text-sm font-medium px-1 uppercase tracking-wider mb-2">Account</p>
+                       <div className="pl-2"><AccountMenu /></div>
                     </div>
                   ) : (
                     <SignInButton mode="modal">

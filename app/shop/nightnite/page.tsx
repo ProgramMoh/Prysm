@@ -1,28 +1,27 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import Link from 'next/link'
 import Image from 'next/image'
 import { PRODUCTS } from '@/lib/constants'
 import StarField from '@/components/effects/StarField'
+import PurchaseControls from '@/components/shop/PurchaseControls'
 
-// Filter specifically for NightNite
 const NIGHTNITE = Object.values(PRODUCTS).find(p => p.slug === 'nightnite')
 
 export default function NightNitePage() {
   if (!NIGHTNITE) return null
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
+    <div className="min-h-screen relative overflow-hidden bg-[#0A0A0A]">
       
       {/* Starry Background */}
       <StarField />
 
       {/* Content */}
       <div className="container mx-auto px-4 z-10 relative pt-32 pb-20 min-h-screen flex items-center">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center w-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center w-full max-w-6xl mx-auto">
           
-          {/* Left: Text Content */}
+          {/* Left: Text Content & Controls */}
           <motion.div 
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -35,21 +34,13 @@ export default function NightNitePage() {
             <h1 className="text-6xl md:text-8xl font-heading font-bold text-white mb-6 drop-shadow-[0_0_15px_rgba(76,29,149,0.5)]">
               NightNite
             </h1>
-            <p className="text-gray-300 text-xl leading-relaxed mb-8 max-w-lg">
+            <p className="text-gray-300 text-xl leading-relaxed mb-10 max-w-lg">
               {NIGHTNITE.description}
             </p>
             
-            <div className="flex gap-6 items-center">
-              <Link href={`/shop/${NIGHTNITE.slug}`}>
-                <button className="px-10 py-4 bg-gradient-to-r from-nightnite-500 to-indigo-600 text-white rounded-full font-heading font-semibold hover:shadow-[0_0_20px_rgba(76,29,149,0.6)] transition-all duration-300 transform hover:-translate-y-1">
-                  Experience Deep Sleep
-                </button>
-              </Link>
-              <div className="text-white/80 font-heading">
-                <span className="block text-sm uppercase tracking-widest text-white/50">One-Time</span>
-                <span className="text-2xl">${NIGHTNITE.price}</span>
-              </div>
-            </div>
+            {/* Embedded Purchase Controls (Dark Theme) */}
+            <PurchaseControls product={NIGHTNITE} theme="dark" />
+            
           </motion.div>
 
           {/* Right: Floating Bottle */}
