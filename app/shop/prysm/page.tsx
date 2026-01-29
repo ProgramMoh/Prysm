@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, Suspense } from 'react'
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
 import { useSearchParams } from 'next/navigation'
 import Image from 'next/image'
@@ -46,11 +46,12 @@ const PRYSM_PRODUCTS = Object.values(PRODUCTS).filter(p =>
   p.slug.includes('prysm') && !p.slug.includes('bundle')
 )
 
-export default function PrysmShopPage() {
+// Internal Component with Logic
+function PrysmShopContent() {
   const [selectedProduct, setSelectedProduct] = useState(PRYSM_PRODUCTS[0])
   const searchParams = useSearchParams()
 
-  // NEW: Listen for URL changes to switch tabs
+  // Listen for URL changes to switch tabs
   useEffect(() => {
     const productSlug = searchParams.get('product')
     if (productSlug) {
@@ -108,6 +109,11 @@ export default function PrysmShopPage() {
               key={product.slug}
               onClick={() => {
                 setSelectedProduct(product)
+                // Optional: Update URL so sharing/refreshing keeps the selection
+                const newUrl = new URL(window.location.href)
+                newUrl.searchParams.set('product', product.slug)
+                window.history.pushState({}, '', newUrl)
+
                 window.scrollTo({ top: 0, behavior: 'smooth' })
               }}
               className={cn(
@@ -302,5 +308,14 @@ export default function PrysmShopPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+// MAIN EXPORT WITH SUSPENSE BOUNDARY
+export default function PrysmShopPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-bg-primary" />}>
+      <PrysmShopContent />
+    </Suspense>
   )
 }
