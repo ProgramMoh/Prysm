@@ -14,8 +14,25 @@ const products = [
 ]
 
 export default function ProductShowcase() {
+
+  // Helper function to generate the correct URL
+  const getProductUrl = (slug: string) => {
+    // 1. Nightnite has its own dedicated page
+    if (slug === 'nightnite') {
+      return '/shop/nightnite'
+    }
+    
+    // 2. Prysm products live on one page, so we use a query param to select the tab
+    if (slug.includes('prysm')) {
+      return `/shop/prysm?product=${slug}`
+    }
+
+    // 3. Fallback for any other future products
+    return `/shop/${slug}`
+  }
+
   return (
-    <section className="py-32 bg-bg-secondary relative overflow-hidden">
+    <section id="showcase" className="py-32 bg-bg-secondary relative overflow-hidden">
       
       {/* Subtle Background Pattern */}
       <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:16px_16px]" />
@@ -36,12 +53,12 @@ export default function ProductShowcase() {
               Engineered for every state of mind.
             </p>
           </div>
-          <Link
+          {/* <Link
             href="/shop"
             className="hidden md:inline-flex items-center text-bg-primary font-medium hover:text-accent-gold transition-colors"
           >
             View All Products <span className="ml-2">→</span>
-          </Link>
+          </Link> */}
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -54,7 +71,8 @@ export default function ProductShowcase() {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               whileHover={{ y: -5 }}
             >
-              <Link href={`/shop/${product.slug}`} className="block h-full">
+              {/* UPDATED LINK LOGIC HERE */}
+              <Link href={getProductUrl(product.slug)} className="block h-full">
                 <div className="group relative h-full bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100">
                   
                   {/* Image Area */}

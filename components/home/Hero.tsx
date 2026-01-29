@@ -46,7 +46,7 @@ export default function Hero() {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link
-              href="/shop"
+              href="#showcase"
               className="w-full sm:w-auto px-10 py-4 bg-white text-bg-primary font-heading font-semibold rounded-full hover:bg-gray-100 transition-all duration-300 transform hover:scale-105"
             >
               Shop The System

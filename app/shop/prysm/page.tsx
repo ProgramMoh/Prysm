@@ -1,13 +1,14 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
+import { useSearchParams } from 'next/navigation'
 import Image from 'next/image'
 import { PRODUCTS } from '@/lib/constants'
 import { cn } from '@/lib/utils'
 import PurchaseControls from '@/components/shop/PurchaseControls'
 
-// --- CONTENT DATA (Kept mostly same, abbreviated for clarity) ---
+// --- CONTENT DATA ---
 const PRODUCT_DETAILS = {
   'prysm-intima': {
     tagline: "Ignite Your Vitality",
@@ -47,6 +48,18 @@ const PRYSM_PRODUCTS = Object.values(PRODUCTS).filter(p =>
 
 export default function PrysmShopPage() {
   const [selectedProduct, setSelectedProduct] = useState(PRYSM_PRODUCTS[0])
+  const searchParams = useSearchParams()
+
+  // NEW: Listen for URL changes to switch tabs
+  useEffect(() => {
+    const productSlug = searchParams.get('product')
+    if (productSlug) {
+      const foundProduct = PRYSM_PRODUCTS.find(p => p.slug === productSlug)
+      if (foundProduct) {
+        setSelectedProduct(foundProduct)
+      }
+    }
+  }, [searchParams])
   
   const containerRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
@@ -54,17 +67,15 @@ export default function PrysmShopPage() {
     offset: ["start start", "end end"]
   })
 
-  // --- SCROLL ANIMATIONS ---
-  const bottleScale = useTransform(scrollYProgress, [0, 0.7, 0.9], [1, 1, 0.15])
-  const bottleY = useTransform(scrollYProgress, [0, 0.7, 1], [0, 0, 150])
-  const bottleRotate = useTransform(scrollYProgress, [0, 0.7, 0.9], [0, 0, 24])
+  // --- DESKTOP ANIMATIONS ---
+  const bottleScale = useTransform(scrollYProgress, [0, 0.6, 0.8], [1, 1, 0.25])
+  const bottleY = useTransform(scrollYProgress, [0, 0.6, 0.9], [0, 0, 150])
+  const bottleRotate = useTransform(scrollYProgress, [0, 0.6, 0.8], [0, 0, 24])
+  const bottleOpacity = useTransform(scrollYProgress, [0.7, 0.8], [1, 0])
 
-  const bottleOpacity = useTransform(scrollYProgress, [0.8, 0.9], [1, 0])
-
-  const packageOpacity = useTransform(scrollYProgress, [0.85, 1], [0, 1])
-  const packageScale = useTransform(scrollYProgress, [0.8, 1], [0.7, 1])
-  const packageY = useTransform(scrollYProgress, [0.7, 1], [250, 0])
-
+  const packageOpacity = useTransform(scrollYProgress, [0.75, 0.9], [0, 1])
+  const packageScale = useTransform(scrollYProgress, [0.7, 0.9], [0.7, 1])
+  const packageY = useTransform(scrollYProgress, [0.6, 0.9], [250, 0])
 
   const details = PRODUCT_DETAILS[selectedProduct.slug as keyof typeof PRODUCT_DETAILS] || PRODUCT_DETAILS['prysm-intima']
 
@@ -115,16 +126,14 @@ export default function PrysmShopPage() {
       <div className="container mx-auto px-4 z-10 relative">
         <div className="flex flex-col md:flex-row">
           
-          {/* --- LEFT COLUMN: STICKY BOTTLE --- */}
+          {/* --- LEFT COLUMN (DESKTOP): STICKY BOTTLE --- */}
           <div className="hidden md:flex w-1/2 h-screen sticky top-0 items-center justify-center">
             <div className="relative w-full h-[600px] flex items-center justify-center">
               
-              {/* FIX: OUTER WRAPPER handles SCROLL transforms (Scale, Y, Opacity) */}
               <motion.div 
                 style={{ scale: bottleScale, y: bottleY, opacity: bottleOpacity, rotate: bottleRotate }}
                 className="relative w-full h-full max-w-sm z-20"
               >
-                {/* FIX: INNER DIV handles SWITCHING transforms (Fade In/Out on click) */}
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={selectedProduct.slug}
@@ -146,12 +155,11 @@ export default function PrysmShopPage() {
                 </AnimatePresence>
               </motion.div>
 
-              {/* Package Image */}
               <motion.div 
-                style={{ opacity: packageOpacity, scale: packageScale, y:packageY }}
-                className="absolute inset-0 flex items-center justify-center z-10 translate-y-24 pb-20"
+                style={{ opacity: packageOpacity, scale: packageScale, y: packageY }}
+                className="absolute inset-0 flex items-center justify-center z-10 translate-y-24 pb-10"
               >
-                 <div className="relative w-[600px] h-[600px]">
+                 <div className="relative w-[700px] h-[700px] mt-20">
                     <Image
                       src={selectedProduct.images.package}
                       alt="Package"
@@ -163,14 +171,39 @@ export default function PrysmShopPage() {
             </div>
           </div>
 
-          {/* --- RIGHT COLUMN: CONTENT --- */}
+          {/* --- RIGHT COLUMN (CONTENT) --- */}
           <div className="w-full md:w-1/2 flex flex-col pt-32 pb-32">
             
             {/* HERO SECTION */}
             <div className="min-h-[80vh] flex flex-col justify-center">
-              {/* Mobile Only Bottle */}
+              
+              {/* MOBILE ONLY: Floating Bottle with Switching Animation */}
               <div className="md:hidden h-[400px] relative mb-8">
-                 <Image src={selectedProduct.images.cutout} alt={selectedProduct.name} fill className="object-contain" />
+                 <AnimatePresence mode="wait">
+                   <motion.div
+                     key={selectedProduct.slug} // Triggers fade/slide on change
+                     initial={{ opacity: 0, x: -20 }}
+                     animate={{ opacity: 1, x: 0 }}
+                     exit={{ opacity: 0, x: 20 }}
+                     transition={{ duration: 0.3 }}
+                     className="relative w-full h-full"
+                   >
+                     {/* Inner loop for the continuous float */}
+                     <motion.div
+                        animate={{ y: [0, -10, 0] }}
+                        transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+                        className="w-full h-full relative"
+                     >
+                       <Image 
+                        src={selectedProduct.images.cutout} 
+                        alt={selectedProduct.name} 
+                        fill 
+                        className="object-contain" 
+                        priority 
+                       />
+                     </motion.div>
+                   </motion.div>
+                 </AnimatePresence>
               </div>
 
               <motion.div
@@ -214,7 +247,7 @@ export default function PrysmShopPage() {
             </div>
 
             {/* INGREDIENTS SECTION */}
-            <div className="min-h-[40vh] flex flex-col justify-center py-20 border-t border-white/10">
+            <div className="min-h-[40vh] flex flex-col justify-center py-20 border-t border-b border-white/10">
               <h3 className="text-sm font-bold tracking-[0.2em] text-accent-gold mb-6 uppercase">
                 Active Ingredients
               </h3>
@@ -235,8 +268,25 @@ export default function PrysmShopPage() {
             </div>
 
             {/* PACKAGE / END SECTION */}
-            <div className="min-h-[60vh] flex flex-col justify-end pb-20">
+            <div className="min-h-[60vh] flex flex-col justify-end pb-10 pt-20">
               <div className="bg-white/5 backdrop-blur-sm border border-white/10 p-8 rounded-2xl">
+                
+                {/* MOBILE ONLY: Package Image with Slide Up Animation */}
+                <motion.div 
+                  className="md:hidden relative w-full h-[400px] mb-8"
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8 }}
+                >
+                    <Image
+                      src={selectedProduct.images.package}
+                      alt="Package"
+                      fill
+                      className="object-contain"
+                    />
+                </motion.div>
+
                 <h3 className="text-2xl font-heading text-white mb-2">The Monthly Supply</h3>
                 <p className="text-text-secondary mb-6">{details.packageDesc}</p>
                 <p className="text-sm text-gray-400">
