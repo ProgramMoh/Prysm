@@ -55,12 +55,16 @@ export default function PrysmShopPage() {
   })
 
   // --- SCROLL ANIMATIONS ---
-  const bottleScale = useTransform(scrollYProgress, [0, 0.7, 1], [1, 1, 0.45])
+  const bottleScale = useTransform(scrollYProgress, [0, 0.7, 0.9], [1, 1, 0.15])
   const bottleY = useTransform(scrollYProgress, [0, 0.7, 1], [0, 0, 150])
-  const bottleOpacity = useTransform(scrollYProgress, [0.85, 1], [1, 0])
+  const bottleRotate = useTransform(scrollYProgress, [0, 0.7, 0.9], [0, 0, 24])
 
-  const packageOpacity = useTransform(scrollYProgress, [0.8, 1], [0, 1])
-  const packageScale = useTransform(scrollYProgress, [0.8, 1], [0.9, 1])
+  const bottleOpacity = useTransform(scrollYProgress, [0.8, 0.9], [1, 0])
+
+  const packageOpacity = useTransform(scrollYProgress, [0.85, 1], [0, 1])
+  const packageScale = useTransform(scrollYProgress, [0.8, 1], [0.7, 1])
+  const packageY = useTransform(scrollYProgress, [0.7, 1], [250, 0])
+
 
   const details = PRODUCT_DETAILS[selectedProduct.slug as keyof typeof PRODUCT_DETAILS] || PRODUCT_DETAILS['prysm-intima']
 
@@ -117,7 +121,7 @@ export default function PrysmShopPage() {
               
               {/* FIX: OUTER WRAPPER handles SCROLL transforms (Scale, Y, Opacity) */}
               <motion.div 
-                style={{ scale: bottleScale, y: bottleY, opacity: bottleOpacity }}
+                style={{ scale: bottleScale, y: bottleY, opacity: bottleOpacity, rotate: bottleRotate }}
                 className="relative w-full h-full max-w-sm z-20"
               >
                 {/* FIX: INNER DIV handles SWITCHING transforms (Fade In/Out on click) */}
@@ -144,10 +148,10 @@ export default function PrysmShopPage() {
 
               {/* Package Image */}
               <motion.div 
-                style={{ opacity: packageOpacity, scale: packageScale }}
-                className="absolute inset-0 flex items-center justify-center z-10 translate-y-24"
+                style={{ opacity: packageOpacity, scale: packageScale, y:packageY }}
+                className="absolute inset-0 flex items-center justify-center z-10 translate-y-24 pb-20"
               >
-                 <div className="relative w-[500px] h-[500px]">
+                 <div className="relative w-[600px] h-[600px]">
                     <Image
                       src={selectedProduct.images.package}
                       alt="Package"

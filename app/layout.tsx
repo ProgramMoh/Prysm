@@ -24,7 +24,8 @@ export const metadata: Metadata = {
   keywords: ['energy drinks', 'sleep aid', 'premium wellness', 'natural supplements'],
 }
 
-export default function RootLayout({
+// FIX: Added 'async' keyword here
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
