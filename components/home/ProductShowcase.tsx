@@ -76,8 +76,12 @@ export default function ProductShowcase() {
                 <div className="group relative h-full bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100">
                   
                   {/* Image Area */}
-                  <div className="relative h-64 w-full bg-gray-50/50 flex items-center justify-center p-6 group-hover:bg-gray-50 transition-colors">
-                    <div className="relative w-full h-full transition-transform duration-500 group-hover:scale-105">
+                  <div className="relative h-64 w-full bg-gray-50/50 flex items-center justify-center p-2 group-hover:bg-gray-50 transition-colors">
+                  <div className={cn(
+                      "relative w-full h-full transition-transform duration-500",
+                      // FIX: Apply scale-110 for tall Prysm bottles, but scale-90 for the wider Nightnite bottle
+                      product.slug === 'nightnite' ? "scale-100 group-hover:scale-110" : "scale-150 group-hover:scale-[1.75]"
+                    )}>                      
                       <ProductImage
                         src={product.images.cutout}
                         alt={product.name}
@@ -118,14 +122,14 @@ export default function ProductShowcase() {
           ))}
         </div>
 
-        <div className="mt-12 text-center md:hidden">
+        {/* <div className="mt-12 text-center md:hidden">
            <Link
             href="/shop"
             className="inline-block px-8 py-3 border border-gray-300 rounded-full text-bg-primary font-medium"
           >
             View All Products
           </Link>
-        </div>
+        </div> */}
       </div>
     </section>
   )
